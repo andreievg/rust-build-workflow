@@ -1,3 +1,3 @@
 fn main() {
-    println!("Initial");
+    println!("Initial - 1");
 }
