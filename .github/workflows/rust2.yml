@@ -26,8 +26,6 @@ jobs:
           ~/.cargo/git/db/
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - name: Checkout
-
     - name: Build
       run: cargo build --verbose
     - name: Run tests
