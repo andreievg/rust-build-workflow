@@ -48,11 +48,11 @@ jobs:
   test-matrix:
     strategy:
       matrix:
-        os: ${{ fromJSON( format('[{0}{1}]', 'ubuntu-latest', inputs.windows && ', windows-latest' || '') ) }}
+        os: [linux-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - env:
-         EVENT_CONTEXT: ${{ toJSON(github.event) }}
+         EVENT_CONTEXT: ${{ format('[{0}{1}]', 'ubuntu-latest', inputs.windows && ', windows-latest' || '') }}
         run : |
           echo $EVENT_CONTEXT
  
