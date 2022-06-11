@@ -6,14 +6,37 @@ on:
       windows:
         description: 'Test on Windows'
         required: true 
+        default: true
         type: boolean 
       mac:
         description: 'Test on Mac'
         required: true 
+        default: true
         type: boolean
       linux:
         description: 'Test on Linux'
         required: true 
+        default: true
+        type: boolean
+      front-end:
+        description: 'Compile and Test Front End'
+        required: true
+        default: true 
+        type: boolean
+      electron:
+        description: 'Compile and Test Electron'
+        required: true
+        default: true 
+        type: boolean
+      back-end-postgres:
+        description: 'Compile and Test Back End (Postgres)'
+        required: true
+        default: true 
+        type: boolean
+      back-end-sqlite:
+        description: 'Compile and Test Back End (Sqlite)'
+        required: true
+        default: true 
         type: boolean
   pull_request:
     paths: ["client/**"]
@@ -22,27 +45,13 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  test-linux:
-    if: ${{ inputs.linux || !github.event.inputs }}
-    runs-on: ubuntu-latest
+  test-matrix:
+    strategy:
+      matrix:
+        runs-on: ${{ fromJSON( format('[{0}{1}]', 'ubuntu-latest', inputs.windows && ', windows-latest' || '') ) }}
     steps:
       - env:
          EVENT_CONTEXT: ${{ toJSON(github.event) }}
         run : |
           echo $EVENT_CONTEXT
-  test-windows:
-    if: ${{ inputs.windows || !github.event.inputs }}
-    runs-on: windows-latest
-    steps:
-      - env:
-         EVENT_CONTEXT: ${{ toJSON(github.event) }}
-        run : |
-          echo $EVENT_CONTEXT
-  test-mac:
-    if: ${{ inputs.mac || !github.event.inputs  }}
-    runs-on: macos-latest
-    steps:
-      - env:
-         EVENT_CONTEXT: ${{ toJSON(github.event) }}
-        run : |
-          echo $EVENT_CONTEXT
+ 
