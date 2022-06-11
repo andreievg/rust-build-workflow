@@ -2,6 +2,19 @@ name: Rust
 
 on:
   workflow_dispatch:
+   inputs:
+      windows:
+        description: 'Test on Windows'
+        required: true 
+        type: boolean 
+      mac:
+        description: 'Test on mac'
+        required: true 
+        type: boolean
+      linux:
+        description: 'Test on linux'
+        required: true 
+        type: boolean
   pull_request:
     paths: ["client/**"]
 
@@ -9,8 +22,25 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  test-linux:
     runs-on: ubuntu-latest
+    if: ${{ inputs.linux }}
+    steps:
+      - env:
+         EVENT_CONTEXT: ${{ toJSON(github.event) }}
+        run : |
+          echo $EVENT_CONTEXT
+  test-windows:
+    runs-on: windows-latest
+    if: ${{ inputs.windows }}
+    steps:
+      - env:
+         EVENT_CONTEXT: ${{ toJSON(github.event) }}
+        run : |
+          echo $EVENT_CONTEXT
+  test-mac:
+    runs-on: macos-latest
+    if: ${{ inputs.mac }}
     steps:
       - env:
          EVENT_CONTEXT: ${{ toJSON(github.event) }}
