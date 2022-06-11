@@ -48,7 +48,7 @@ jobs:
   test-matrix:
     strategy:
       matrix:
-        os: []
+        os: ${{ fromJSON(format('[]', inputs.mac && ',{"os": "macos-latest"}' || '', inputs.linux && ',{"os": "ubuntu-latest"}' || '', inputs.windows && ',{"os": "windows-latest"}' || '')).*.os }}
     runs-on: ${{ matrix.os }}
     steps:
       - env:
