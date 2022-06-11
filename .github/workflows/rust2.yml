@@ -3,7 +3,6 @@ name: Rust
 on:
   workflow_dispatch:
   pull_request:
-    types: [opened, reopened]
     paths: ["client/**"]
 
 env:
