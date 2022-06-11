@@ -52,7 +52,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - env:
-         EVENT_CONTEXT: ${{ fromJSON('[format('[{0}{1}]', 'ubuntu-latest', inputs.windows && ', windows-latest' || '')]') }}
+         EVENT_CONTEXT: ${{ fromJSON(format('[{0}{1}]', 'ubuntu-latest', inputs.windows && ', windows-latest' || '')) }}
         run : |
           echo $EVENT_CONTEXT
  
