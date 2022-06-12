@@ -11,8 +11,7 @@ jobs:
       # - run: sudo mount -t tmpfs none ./target
       # - run: cat /proc/mounts | grep "$(pwd)" | sudo tee -a /etc/fstab
       - run: cargo run
- 
- jobs:
+
   test-front-end2:
     runs-on: buildjet-8vcpu-ubuntu-2004
     steps:
@@ -22,7 +21,6 @@ jobs:
       # - run: cat /proc/mounts | grep "$(pwd)" | sudo tee -a /etc/fstab
       - run: cargo run
  
-   jobs:
   test-front-end2:
     runs-on: buildjet-16vcpu-ubuntu-2004
     steps:
