@@ -7,11 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Do
-        uses: actions/checkout@v3
-        - run: mkdir -p target
-        - run: sudo mount -t tmpfs none ./target
-        - run: cat /proc/mounts | grep "$(pwd)" | sudo tee -a /etc/fstab
-        - run: cargo run
+      - uses: actions/checkout@v3
+      - run: mkdir -p target
+      - run: sudo mount -t tmpfs none ./target
+      - run: cat /proc/mounts | grep "$(pwd)" | sudo tee -a /etc/fstab
+      - run: cargo run
  
       
 
