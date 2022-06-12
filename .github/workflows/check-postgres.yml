@@ -21,7 +21,7 @@ jobs:
       # - run: cat /proc/mounts | grep "$(pwd)" | sudo tee -a /etc/fstab
       - run: cargo run
  
-  test-front-end2:
+  test-front-end3:
     runs-on: buildjet-16vcpu-ubuntu-2004
     steps:
       - uses: actions/checkout@v3
