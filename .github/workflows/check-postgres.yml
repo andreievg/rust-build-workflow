@@ -6,12 +6,12 @@ jobs:
   test-front-end:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Do
         uses: actions/checkout@v3
-      - name: Compile
         - run: mkdir -p target
         - run: sudo mount -t tmpfs none ./target
         - run: cat /proc/mounts | grep "$(pwd)" | sudo tee -a /etc/fstab
         - run: cargo run
+ 
       
 
