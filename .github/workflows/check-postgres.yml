@@ -17,9 +17,5 @@ jobs:
       # - run: sudo mount -t tmpfs none ./target
       # - run: cat /proc/mounts | grep "$(pwd)" | sudo tee -a /etc/fstab
       - run: choco install openssl
-
-      - uses: actions/checkout@v2
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
   
-      # - run: cargo build --release
+      - run: cargo build --release
