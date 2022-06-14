@@ -10,4 +10,5 @@ jobs:
       # - run: mkdir -p target
       # - run: sudo mount -t tmpfs none ./target
       # - run: cat /proc/mounts | grep "$(pwd)" | sudo tee -a /etc/fstab
+      - run: vcpkg install openssl:x64-windows
       - run: cargo build --release
