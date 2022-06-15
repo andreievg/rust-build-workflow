@@ -7,7 +7,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Check
-        run: echo %PGROOT%
+        run: echo $Env:PGROOT
       # - name: Start Postgres
       #   run: |
       #     cd "$PGBIN"
