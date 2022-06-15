@@ -21,3 +21,4 @@ jobs:
           pg_ctl init
           pg_ctl start
           psql -U postgres -c 'SELECT 1'
+        shell: bash
