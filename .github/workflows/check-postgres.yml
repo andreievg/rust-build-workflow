@@ -6,15 +6,17 @@ jobs:
   test-pg:
     runs-on: windows-latest
     steps:
-      - name: Check
-        run: echo $Env:PGROOT
       # - name: Start Postgres
       #   run: |
       #     cd "$PGBIN"
       #     ./pg_ctl start -o "-c max_connections=100"
       #     ./psql -U postgres -h localhost -c 'SELECT 1'
       #   shell: bash
-      
+      - name: Check1
+        run: export PQ_LIB_DIR="$PGROOT\lib"
+
+      - name: Check
+        run: echo $Env:PQ_LIB_DIR
 
   # test-pg1:
   #   runs-on: macos-latest
