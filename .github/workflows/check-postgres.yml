@@ -6,65 +6,49 @@ jobs:
   test-pg:
     runs-on: windows-latest
     steps:
-      - name: Set paths
-        # Adding 
-        run: |
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            echo "$(pg_config --bindir)" >> $GITHUB_PATH
-          elif [ "$RUNNER_OS" == "Windows" ]; then
-            echo "$PGBIN" >> $GITHUB_PATH
-            echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
-          fi
-        shell: bash
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+  # test-pg1:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Set paths
+  #       # Adding 
+  #       run: |
+  #         if [ "$RUNNER_OS" == "Linux" ]; then
+  #           echo "$(pg_config --bindir)" >> $GITHUB_PATH
+  #         elif [ "$RUNNER_OS" == "Windows" ]; then
+  #           echo "$PGBIN" >> $GITHUB_PATH
+  #           echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
+  #         fi
+  #       shell: bash
 
-      - name: Initialse PG
-        run: |
-          export PGDATA="$RUNNER_TEMP/pgdata"
-          pg_ctl init
-          pg_ctl start
-          psql -U postgres -c 'SELECT 1'
-        shell: bash
-  test-pg1:
-    runs-on: macos-latest
-    steps:
-      - name: Set paths
-        # Adding 
-        run: |
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            echo "$(pg_config --bindir)" >> $GITHUB_PATH
-          elif [ "$RUNNER_OS" == "Windows" ]; then
-            echo "$PGBIN" >> $GITHUB_PATH
-            echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
-          fi
-        shell: bash
+  #     - name: Initialse PG
+  #       run: |
+  #         export PGDATA="$RUNNER_TEMP/pgdata"
+  #         pg_ctl init
+  #         pg_ctl start
+  #         psql -U postgres -c 'SELECT 1'
+  #       shell: bash
 
-      - name: Initialse PG
-        run: |
-          export PGDATA="$RUNNER_TEMP/pgdata"
-          pg_ctl init
-          pg_ctl start
-          psql -U postgres -c 'SELECT 1'
-        shell: bash
+  # test-pg2:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Set paths
+  #       # Adding 
+  #       run: |
+  #         if [ "$RUNNER_OS" == "Linux" ]; then
+  #           echo "$(pg_config --bindir)" >> $GITHUB_PATH
+  #         elif [ "$RUNNER_OS" == "Windows" ]; then
+  #           echo "$PGBIN" >> $GITHUB_PATH
+  #           echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
+  #         fi
+  #       shell: bash
 
-  test-pg2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set paths
-        # Adding 
-        run: |
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            echo "$(pg_config --bindir)" >> $GITHUB_PATH
-          elif [ "$RUNNER_OS" == "Windows" ]; then
-            echo "$PGBIN" >> $GITHUB_PATH
-            echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
-          fi
-        shell: bash
-
-      - name: Initialse PG
-        run: |
-          export PGDATA="$RUNNER_TEMP/pgdata"
-          pg_ctl init
-          pg_ctl start
-          psql -U postgres -c 'SELECT 1'
-        shell: bash
+  #     - name: Initialse PG
+  #       run: |
+  #         export PGDATA="$RUNNER_TEMP/pgdata"
+  #         pg_ctl init
+  #         pg_ctl start
+  #         psql -U postgres -c 'SELECT 1'
+  #       shell: bash
 
