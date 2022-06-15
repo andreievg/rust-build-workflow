@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Start Postgres
         run: |
-          pg_ctl init "$RUNNER_TEMP/pgdata"
+          pg_ctl init -D "$RUNNER_TEMP/pgdata"
           createuser --createdb postgres
           pg_ctl start -D "$RUNNER_TEMP/pgdata"
           psql -U postgres -h localhost -c 'SELECT 1'
