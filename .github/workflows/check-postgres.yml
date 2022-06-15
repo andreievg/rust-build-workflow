@@ -3,9 +3,7 @@ name: check-postgres
 on:
   workflow_dispatch:
 jobs:
-  test-openssl:
-    env: 
-      OPENSSL_DIR: C:\Program Files\OpenSSL-Win64\
+  test-pg:
     runs-on: windows-latest
   #   steps:
   #   - uses: actions/checkout@v2
@@ -16,6 +14,6 @@ jobs:
       # - run: mkdir -p target
       # - run: sudo mount -t tmpfs none ./target
       # - run: cat /proc/mounts | grep "$(pwd)" | sudo tee -a /etc/fstab
-      - run: choco install openssl
-  
-      - run: cargo build --release
+      - run: pg_ctl init
+      - run: pg_ctl start
+      - run: psql -U postgres -c 'SELECT 1'
