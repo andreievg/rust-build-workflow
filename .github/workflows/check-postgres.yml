@@ -7,9 +7,8 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Start Postgres
-        working-directory: ${{ env.PGBIN }}
         run: |
-          pwd
+          cd "$PGBIN"
           ./pg_ctl start --option max_connections=100
           ./psql -U postgres -h localhost -c 'SELECT 1'
         shell: bash
