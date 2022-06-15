@@ -11,7 +11,7 @@ jobs:
   #     uses: mxschmitt/action-tmate@v3
     steps:
       - name: Initialse DB
-      - run: |
+        run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
           echo "$(pg_config --bindir)" >> $GITHUB_PATH
         elif [ "$RUNNER_OS" == "Windows" ]; then
