@@ -12,9 +12,11 @@ jobs:
       #     ./pg_ctl start -o "-c max_connections=100"
       #     ./psql -U postgres -h localhost -c 'SELECT 1'
       #   shell: bash
-      - name: Check1
-        run: echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
-        shell: bash
+      # - name: Check1
+      #   run: echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
+      #   shell: bash
+      - name: Check
+        run: setx /m PQ_LIB_DIR "$Env:PQ_LIB_DIR=$PGROOT\lib"
 
       - name: Check
         run: |
