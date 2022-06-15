@@ -22,5 +22,5 @@ jobs:
         # shell: bash
 
       - name: Initialse PG
-      - run:  pg_ctl start
-      - run: psql -U postgres -c 'SELECT 1'
+        - run: pg_ctl start
+        - run: psql -U postgres -c 'SELECT 1'
