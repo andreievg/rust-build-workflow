@@ -17,9 +17,7 @@ jobs:
         shell: bash
 
       - name: Check2
-        run: |
-          setx PQ_LIB_DIR "$Env:PGROOT\lib"
-          echo $Env:PQ_LIB_DIR
+        run: [System.Environment]::SetEnvironmentVariable("PQ_LIB_DIR","$Env:PGROOT\lib",[System.EnvironmentVariableTarget]::User)
 
       - name: Check
         run: |
