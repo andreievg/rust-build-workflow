@@ -10,17 +10,6 @@ jobs:
   #   - name: Setup tmate session
   #     uses: mxschmitt/action-tmate@v3
     steps:
-      # - name: Set paths
-        # # Adding 
-        # run: |
-        #   if [ "$RUNNER_OS" == "Linux" ]; then
-        #     echo "$(pg_config --bindir)" >> $GITHUB_PATH
-        #   elif [ "$RUNNER_OS" == "Windows" ]; then
-        #     echo "$PGBIN" >> $GITHUB_PATH
-        #     echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
-        #   fi
-        # shell: bash
-
       - name: Initialse PG
         - run: pg_ctl start
         - run: psql -U postgres -c 'SELECT 1'
