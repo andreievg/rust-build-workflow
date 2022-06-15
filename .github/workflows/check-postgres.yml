@@ -3,25 +3,29 @@ name: check-postgres
 on:
   workflow_dispatch:
 jobs:
-  # test-pg:
-  #   runs-on: windows-latest
+  test-pg:
+    runs-on: windows-latest
+    steps:
+      - name: Check
+        run: echo %PGROOT%
+      # - name: Start Postgres
+      #   run: |
+      #     cd "$PGBIN"
+      #     ./pg_ctl start -o "-c max_connections=100"
+      #     ./psql -U postgres -h localhost -c 'SELECT 1'
+      #   shell: bash
+      
+
+  # test-pg1:
+  #   runs-on: macos-latest
   #   steps:
   #     - name: Start Postgres
   #       run: |
-  #         cd "$PGBIN"
-  #         ./pg_ctl start -o "-c max_connections=100"
-  #         ./psql -U postgres -h localhost -c 'SELECT 1'
+  #         pg_ctl init -D "$RUNNER_TEMP/pgdata"
+  #         pg_ctl start -D "$RUNNER_TEMP/pgdata"
+  #         createuser --createdb postgres
+  #         psql -U postgres -h localhost -c 'SELECT 1'
   #       shell: bash
-  test-pg1:
-    runs-on: macos-latest
-    steps:
-      - name: Start Postgres
-        run: |
-          pg_ctl init -D "$RUNNER_TEMP/pgdata"
-          pg_ctl start -D "$RUNNER_TEMP/pgdata"
-          createuser --createdb postgres
-          psql -U postgres -h localhost -c 'SELECT 1'
-        shell: bash
 
   # test-pg2:
   #   runs-on: ubuntu-latest
