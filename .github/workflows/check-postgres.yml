@@ -10,10 +10,14 @@ jobs:
   #   - name: Setup tmate session
   #     uses: mxschmitt/action-tmate@v3
     steps:
-      - uses: actions/checkout@v3
-      # - run: mkdir -p target
-      # - run: sudo mount -t tmpfs none ./target
-      # - run: cat /proc/mounts | grep "$(pwd)" | sudo tee -a /etc/fstab
-      - run: pg_ctl init
-      - run: pg_ctl start
-      - run: psql -U postgres -c 'SELECT 1'
+      - name: Initialse DB
+      - run: |
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          echo "$(pg_config --bindir)" >> $GITHUB_PATH
+        elif [ "$RUNNER_OS" == "Windows" ]; then
+          echo "$PGBIN" >> $GITHUB_PATH
+          echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
+        fi
+        pg_ctl init
+        pg_ctl start
+        psql -U postgres -c 'SELECT 1'
