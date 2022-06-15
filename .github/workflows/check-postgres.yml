@@ -6,8 +6,12 @@ jobs:
   test-pg:
     runs-on: windows-latest
     steps:
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      - name: Start Postgres
+        working-directory: ${{ env.PGBIN }}
+        run: |
+          ./pg_ctl start --option max_connections=100
+          ./psql -U postgres -h localhost -c 'SELECT 1'
+        shell: bash
   # test-pg1:
   #   runs-on: macos-latest
   #   steps:
