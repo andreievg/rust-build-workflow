@@ -9,7 +9,7 @@ jobs:
       - name: Start Postgres
         run: |
           cd "$PGBIN"
-          ./pg_ctl start --option max_connections=100
+          ./pg_ctl start -o max_connections=100
           ./psql -U postgres -h localhost -c 'SELECT 1'
         shell: bash
   # test-pg1:
