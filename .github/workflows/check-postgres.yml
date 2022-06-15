@@ -3,56 +3,8 @@ name: check-postgres
 on:
   workflow_dispatch:
 jobs:
-  test-pg:
-    runs-on: windows-latest
+  test-pg2:
+    runs-on: ubuntu-latest
     steps:
-      # - name: Start Postgres
-      #   run: |
-      #     cd "$PGBIN"
-      #     ./pg_ctl start -o "-c max_connections=100"
-      #     ./psql -U postgres -h localhost -c 'SELECT 1'
-      #   shell: bash
-      # - name: Check1
-      #   run: echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
-      #   shell: bash
-      - name: Check
-        run: setx /m PQ_LIB_DIR "$Env:PQ_LIB_DIR=$PGROOT\lib"
-
-      - name: Check
-        run: |
-          echo $Env:PGROOT
-          echo $Env:PQ_LIB_DIR
-
-  # test-pg1:
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Start Postgres
-  #       run: |
-  #         pg_ctl init -D "$RUNNER_TEMP/pgdata"
-  #         pg_ctl start -D "$RUNNER_TEMP/pgdata"
-  #         createuser --createdb postgres
-  #         psql -U postgres -h localhost -c 'SELECT 1'
-  #       shell: bash
-
-  # test-pg2:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Set paths
-  #       # Adding 
-  #       run: |
-  #         if [ "$RUNNER_OS" == "Linux" ]; then
-  #           echo "$(pg_config --bindir)" >> $GITHUB_PATH
-  #         elif [ "$RUNNER_OS" == "Windows" ]; then
-  #           echo "$PGBIN" >> $GITHUB_PATH
-  #           echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
-  #         fi
-  #       shell: bash
-
-  #     - name: Initialse PG
-  #       run: |
-  #         export PGDATA="$RUNNER_TEMP/pgdata"
-  #         pg_ctl init
-  #         pg_ctl start
-  #         psql -U postgres -c 'SELECT 1'
-  #       shell: bash
-
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
