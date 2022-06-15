@@ -14,7 +14,8 @@ jobs:
       #   shell: bash
       - name: Check1
         run: export PQ_LIB_DIR="$PGROOT\lib"
-
+        shell: bash
+        
       - name: Check
         run: echo $Env:PQ_LIB_DIR
 
