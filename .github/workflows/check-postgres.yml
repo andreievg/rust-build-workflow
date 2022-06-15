@@ -15,9 +15,11 @@ jobs:
       - name: Check1
         run: export PQ_LIB_DIR="$PGROOT\lib"
         shell: bash
-        
+
       - name: Check
-        run: echo $Env:PQ_LIB_DIR
+        run: |
+          echo $Env:PGROOT
+          echo $Env:PQ_LIB_DIR
 
   # test-pg1:
   #   runs-on: macos-latest
