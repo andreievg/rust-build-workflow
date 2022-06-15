@@ -9,6 +9,7 @@ jobs:
       - name: Start Postgres
         working-directory: ${{ env.PGBIN }}
         run: |
+          pwd
           ./pg_ctl start --option max_connections=100
           ./psql -U postgres -h localhost -c 'SELECT 1'
         shell: bash
