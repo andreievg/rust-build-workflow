@@ -13,11 +13,8 @@ jobs:
       #     ./psql -U postgres -h localhost -c 'SELECT 1'
       #   shell: bash
       - name: Check1
-        run: export PQ_LIB_DIR="$PGROOT\lib"
+        run: echo "PQ_LIB_DIR=$PGROOT\lib" >> $GITHUB_ENV
         shell: bash
-
-      - name: Check2
-        run: '[System.Environment]::SetEnvironmentVariable("PQ_LIB_DIR","$Env:PGROOT\lib",[System.EnvironmentVariableTarget]::User)'
 
       - name: Check
         run: |
