@@ -17,7 +17,9 @@ jobs:
         shell: bash
 
       - name: Check2
-        run: setx PQ_LIB_DIR "$Env:PGROOT\lib"
+        run: |
+          setx PQ_LIB_DIR "$Env:PGROOT\lib"
+          echo $Env:PQ_LIB_DIR
 
       - name: Check
         run: |
