@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Initialse PG
         run: | 
-          pg_ctl start
+          pg_ctl start --options max_connections=100
           psql -U postgres -c 'SELECT 1'
       # - name: Set paths
         # # Adding 
