@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 jobs:
   test-pg2:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
@@ -15,5 +15,6 @@ jobs:
           cd "$PGBIN"
           ./pg_ctl init -D "$RUNNER_TEMP/pgdata"
           ./pg_ctl start -D "$RUNNER_TEMP/pgdata" -o "-c max_connections=100"
+          ./createuser -U $(whoami) --createdb postgres
           ./psql -U postgres -h localhost -c 'SELECT 1'
         shell: bash
