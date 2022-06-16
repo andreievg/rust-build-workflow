@@ -12,7 +12,6 @@ jobs:
           cd "$PGBIN"
           ./pg_ctl init -D "$RUNNER_TEMP/pgdata"
           ./pg_ctl start -D "$RUNNER_TEMP/pgdata" -o "-c max_connections=100"
-          ./createuser --createdb postgres
           ./psql -U postgres -h localhost -c 'SELECT 1'
         shell: bash
       - name: Setup tmate session
