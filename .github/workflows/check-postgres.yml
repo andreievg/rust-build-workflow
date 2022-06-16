@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 jobs:
   test-pg2:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Start Postgres
         if: runner.os == 'Windows'
