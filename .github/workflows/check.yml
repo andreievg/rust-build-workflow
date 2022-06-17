@@ -54,9 +54,9 @@ jobs:
         with:
           name: ${{ env.TEST_BINARIES }}
 
-      - name:  Setup tmate session
-        if: runner.os == 'Windows'
-        uses: mxschmitt/action-tmate@v3
+      # - name:  Setup tmate session
+      #   if: runner.os == 'Windows'
+      #   uses: mxschmitt/action-tmate@v3
 
       - name: Execute Test Binaries Linux
         if: runner.os != 'Windows'
