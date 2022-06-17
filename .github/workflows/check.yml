@@ -51,6 +51,7 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: ${{ env.TEST_BINARIES }}
+                  path: binary_files
 
             - name: Make Binaries Executable
               # Permissions are lost during upload/download artifact
@@ -58,4 +59,4 @@ jobs:
               run: chmod +x *
 
             - name: Execute Test Binaries
-              run: node workflow_helpers/execute_all_in_folder ${{ env.TEST_BINARIES }}
+              run: node workflow_helpers/execute_all_in_folder binary_files

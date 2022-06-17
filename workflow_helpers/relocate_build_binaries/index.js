@@ -1,6 +1,6 @@
 const { argv } = require('process')
 const { execSync } = require('child_process')
-const { mkdirSync } = require('fs')
+const { mkdirSync, rmSync } = require('fs')
 
 // Usage: cargo build --tests --message-format=json | node workflow_helpers/relocate_build_binaries out_folder_name
 
@@ -13,7 +13,7 @@ const main = () => {
         if (argv[2] !== '--test') {
             let targetDir = argv[2]
 
-            mkdirSync(targetDir, { recursive: true })
+            reCreateDir(targetDir)
             let executableList = extractFilenames(data)
 
             let command = `mv ${executableList.join(' ')}  ${targetDir}`
@@ -25,6 +25,11 @@ const main = () => {
             test(data)
         }
     })
+}
+
+const reCreateDir = (dir) => {
+    rmSync(dir, { recursive: true, force: true })
+    mkdirSync(dir, { recursive: true })
 }
 
 const extractFilenames = (input) => {
