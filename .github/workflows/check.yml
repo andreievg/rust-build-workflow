@@ -1,86 +1,58 @@
 name: check
 
 on:
-  workflow_call:
-    inputs:
-      os:
-        required: true
-        type: string
+    workflow_call:
+        inputs:
+            os:
+                required: true
+                type: string
 
-env: 
-  TEST_BINARIES: ${{ format('test_binaries_{0}', inputs.os) }}
+env:
+    TEST_BINARIES: ${{ format('test_binaries_{0}', inputs.os) }}
 
 jobs:
-  check:
-    runs-on: ${{ inputs.os }}
-    steps:
-      - name: Checkout 
-        uses: actions/checkout@v3
+    check:
+        runs-on: ${{ inputs.os }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
 
-      - name: Cache
-        # Caches dependencies for rust (debug or test), does not cache increments
-        uses: Swatinem/rust-cache@v1
+            - name: Cache
+              # Caches dependencies for rust (debug or test), does not cache increments
+              uses: Swatinem/rust-cache@v1
 
-      - name: Build Tests on Window
-        if: runner.os == 'Windows'
-        env:
-          OPENSSL_DIR: C:\Program Files\OpenSSL-Win64\
-        run: |
-          choco install openssl
-          cargo build --tests --message-format=json > test_build_info.txt
+              # Build and relocate test binaries to binary_files folder
+            - name: Build Tests on Window
+              if: runner.os == 'Windows'
+              env:
+                  OPENSSL_DIR: C:\Program Files\OpenSSL-Win64\
+              run: |
+                  choco install openssl
+                  cargo build --tests --message-format=json > test_build_info.txt | node workflow_helpers/relocate_build_binaries binary_files
 
-      - name: Build Tests on Mac/Linux
-        if: runner.os != 'Windows'
-        run: cargo build --tests --message-format=json > test_build_info.txt
+              # Build and relocate test binaries to binary_files folder
+            - name: Build Tests on Mac/Linux
+              if: runner.os != 'Windows'
+              run: cargo build --tests --message-format=json > cargo build --tests | node workflow_helpers/relocate_build_binaries binary_files
 
-      - name: Extract Binary File List
-        # move test binaries to binaries folder, use cargo output saved to test_build_info.txt to locate binaries
-        run: | 
-          node -e "
-            console.log(
-              require('fs')
-                .readFileSync('out.txt', 'utf8')
-                .trim()
-                // --message-format=json output is json seperated by newline
-                .split('\n')
-                .map(JSON.parse)
-                // we want to extra this field, it has full path of binary
-                .map(({ executable }) => executable)
-                // some json output might not have executable key
-                .filter((e) => e)
-                // unique
-                .reduce((a, e) => (a.includes(e) ? a : [...a, e]), [])
-            );
-            // save output to binaries.txt (newlines seperated file locations)
-          " > binaries.txt
-          mkdir binaries
-          cat binaries.txt | xargs -I '{}' mv '{}' ./binaries/.
-        shell: bash
-      
-      - name: Archive Tests
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.TEST_BINARIES }}
-          path: binary_files
-  check2:
-    runs-on: ${{ inputs.os }}
-    needs: check
-    steps:
-      - name: Download Test Binaries
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.TEST_BINARIES }}
+            - name: Archive Tests
+              uses: actions/upload-artifact@v3
+              with:
+                  name: ${{ env.TEST_BINARIES }}
+                  path: binary_files
+    check2:
+        runs-on: ${{ inputs.os }}
+        needs: check
+        steps:
+            - name: Download Test Binaries
+              uses: actions/download-artifact@v3
+              with:
+                  name: ${{ env.TEST_BINARIES }}
 
-      - name: Make Binaries Executable
-        # Permissions are lost during upload/download artifact
-        if: runner.os != 'Windows'
-        run: chmod +x *
+            - name: Make Binaries Executable
+              # Permissions are lost during upload/download artifact
+              if: runner.os != 'Windows'
+              run: chmod +x *
 
-      - name: Execute Test Binaries
-        run: | 
-          node -e "
-            require('fs')
-              .readdirSync('.', 'utf8')
-              .map((executable) => require('child_process').execSync(executable, { stdio: 'inherit' }));
-          "
-
+            - name: Execute Test Binaries
+              run: node workflow_helpers/execute_all_in_folder .
