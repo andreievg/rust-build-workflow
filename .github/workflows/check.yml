@@ -55,4 +55,4 @@ jobs:
               run: chmod +x *
 
             - name: Execute Test Binaries
-              run: node workflow_helpers/execute_all_in_folder .
+              run: node ../workflow_helpers/execute_all_in_folder .
