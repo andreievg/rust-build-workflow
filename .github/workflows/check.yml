@@ -1,15 +1,22 @@
 name: check
 
 on:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.os }}
     steps:
       - name: Checkout 
         uses: actions/checkout@v3
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v3
+
+      - name: Cache
+        # Caches dependencies for rust (debug or test), does not cache increments
+        uses: Swatinem/rust-cache@v1
+
       - name: Build Tests
         run: cargo build --tests --message-format=json > test_build_info.txt
 
@@ -26,11 +33,18 @@ jobs:
           name: test_binaries
           path: binary_files
   check2:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.os }}
     needs: check
     steps:
-      - name: Download Test binaries
+      - name: Download Test Binaries
         uses: actions/download-artifact@v3
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      - name: Execute Test Binaries
+        run: | 
+          chmod +x test_binaries/*
+          run-parts test_binaries/
+
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+
+

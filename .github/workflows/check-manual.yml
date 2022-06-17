@@ -1,0 +1,37 @@
+name: check
+
+on:
+  workflow_dispatch:
+    # Input will appear when running job manually
+    inputs:
+      on-windows:
+        description: 'Windows'
+        default: true
+        required: true
+        type: boolean
+      on-mac:
+        description: 'Mac'
+        default: true
+        required: true
+        type: boolean
+      on-linux:
+        description: 'Linux'
+        default: true
+        required: true
+        type: boolean
+jobs:
+  linux:
+    if: ${{ inputs.on-linux }}
+    uses: ./.github/workflows/check.yml
+    with:
+      os: ubuntu-latest
+  windows:
+    if: ${{ inputs.on-windows }}
+    uses: ./.github/workflows/check.yml
+    with:
+      os: windows-latest
+  mac:
+    if: ${{ inputs.on-mac }}
+    uses: ./.github/workflows/check.yml
+    with:
+      os: macos-latest
