@@ -6,9 +6,11 @@ on:
       os:
         required: true
         type: string
+        
+env: 
+  TEST_BINARIES: ${{ "test_binaries_" + inputs.os }}
+
 jobs:
-  env: 
-    TEST_BINARIES: ${{ "test_binaries_" + inputs.os }}
   check:
     runs-on: ${{ inputs.os }}
     steps:
