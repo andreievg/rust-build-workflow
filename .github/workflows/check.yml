@@ -7,6 +7,8 @@ on:
         required: true
         type: string
 jobs:
+  env: 
+    TEST_BINARIES: ${{ "test_binaries_" + inputs.os }}
   check:
     runs-on: ${{ inputs.os }}
     steps:
@@ -38,7 +40,7 @@ jobs:
       - name: Archive Tests
         uses: actions/upload-artifact@v3
         with:
-          name: test_binaries
+          name: ${{ env.TEST_BINARIES }}
           path: binary_files
   check2:
     runs-on: ${{ inputs.os }}
@@ -46,6 +48,8 @@ jobs:
     steps:
       - name: Download Test Binaries
         uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.TEST_BINARIES }}
 
       - name:  Setup tmate session
         if: runner.os == 'Windows'
@@ -53,7 +57,7 @@ jobs:
 
       - name: Execute Test Binaries Linux
         if: runner.os != 'Windows'
-        working-directory: test_binaries
+        working-directory: ${{ env.TEST_BINARIES }}
         run: | 
           chmod +x *
           for f in *; do  "./$f" ; done
