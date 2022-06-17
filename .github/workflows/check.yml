@@ -46,7 +46,7 @@ jobs:
       - name:  Setup tmate session
         uses: mxschmitt/action-tmate@v3
 
-     - name: Execute Test Binaries Linux
+      - name: Execute Test Binaries Linux
         if: runner.os == 'Linux'
         working-directory: test_binaries
         run: | 
