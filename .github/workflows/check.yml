@@ -17,11 +17,15 @@ jobs:
         # Caches dependencies for rust (debug or test), does not cache increments
         uses: Swatinem/rust-cache@v1
 
-      - name: Install OpenSSL
+      - name: Build Tests on Window
         if: runner.os == 'Windows'
-        run: choco install openssl
+        run: |
+          choco install openssl
+          setx OPENSSL_DIR "C:\Program Files\OpenSSL-Win64\"
+          cargo build --tests --message-format=json > test_build_info.txt
 
-      - name: Build Tests
+   - name: Build Tests on Mac/Linux
+        if: runner.os != 'Windows'
         run: cargo build --tests --message-format=json > test_build_info.txt
 
       - name: Compress Tests
@@ -44,6 +48,7 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name:  Setup tmate session
+        if: runner.os == 'Windows'
         uses: mxschmitt/action-tmate@v3
 
       - name: Execute Test Binaries Linux
