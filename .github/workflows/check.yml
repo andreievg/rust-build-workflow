@@ -39,6 +39,11 @@ jobs:
       - name: Download Test Binaries
         uses: actions/download-artifact@v3
 
+      - name: Start Postgres Windows
+        if: runner.os == 'Windows'
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Execute Test Binaries
         run: | 
           chmod +x test_binaries/*
