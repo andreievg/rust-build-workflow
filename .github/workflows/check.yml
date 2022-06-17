@@ -8,7 +8,7 @@ on:
         type: string
 
 env: 
-  TEST_BINARIES: ${{ 'test_binaries_' + inputs.os }}
+  TEST_BINARIES: ${{ format('test_binaries_{0}', inputs.os) }}
 
 jobs:
   check:
