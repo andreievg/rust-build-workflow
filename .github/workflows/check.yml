@@ -56,7 +56,7 @@ jobs:
 
       - name:  Setup tmate session
         if: runner.os == 'Windows'
-        uses: mxschmitt/action-tmate@v3
+        run: for %%1 in (*.exe) do start %%1
 
       - name: Execute Test Binaries Linux
         if: runner.os != 'Windows'
