@@ -21,7 +21,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           choco install openssl
-          setx OPENSSL_DIR "C:\Program Files\OpenSSL-Win64\"
+          set OPENSSL_DIR=C:\Program Files\OpenSSL-Win64\
           cargo build --tests --message-format=json > test_build_info.txt
 
       - name: Build Tests on Mac/Linux
@@ -52,14 +52,7 @@ jobs:
         uses: mxschmitt/action-tmate@v3
 
       - name: Execute Test Binaries Linux
-        if: runner.os == 'Linux'
-        working-directory: test_binaries
-        run: | 
-          chmod +x *
-          run-parts $(pwd)
-
-      - name: Execute Test Binaries Mac
-        if: runner.os == 'macOS'
+        if: runner.os != 'Windows'
         working-directory: test_binaries
         run: | 
           chmod +x *
