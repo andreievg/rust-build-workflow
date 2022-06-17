@@ -1,7 +1,3 @@
-use openssl::ssl::{SslConnector, SslMethod};
-use std::io::{Read, Write};
-use std::net::TcpStream;
-
 #[tokio::main]
 async fn main() {
     use openssl::ssl::{SslConnector, SslMethod};
@@ -17,4 +13,12 @@ async fn main() {
     let mut res = vec![];
     stream.read_to_end(&mut res).unwrap();
     println!("{}", String::from_utf8_lossy(&res));
+}
+
+#[cfg(test)]
+mod test {
+    #[tokio::test]
+    async fn test() {
+        assert!(true);
+    }
 }
