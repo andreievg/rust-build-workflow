@@ -46,12 +46,19 @@ jobs:
       - name:  Setup tmate session
         uses: mxschmitt/action-tmate@v3
 
-      - name: Execute Test Binaries
+     - name: Execute Test Binaries Linux
+        if: runner.os == 'Linux'
+        working-directory: test_binaries
         run: | 
-          chmod +x test_binaries/*
-          run-parts test_binaries
+          chmod +x *
+          run-parts $(pwd)
+
+      - name: Execute Test Binaries Mac
+        if: runner.os == 'macOS'
+        working-directory: test_binaries
+        run: | 
+          chmod +x *
+          for f in *; do  "./$f" ; done
 
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@v3
-
-
