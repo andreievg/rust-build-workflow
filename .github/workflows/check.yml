@@ -28,12 +28,12 @@ jobs:
                   OPENSSL_DIR: C:\Program Files\OpenSSL-Win64\
               run: |
                   choco install openssl
-                  cargo build --tests --message-format=json > test_build_info.txt | node workflow_helpers/relocate_build_binaries binary_files
+                  cargo build --tests --message-format=json | node workflow_helpers/relocate_build_binaries binary_files
 
               # Build and relocate test binaries to binary_files folder
             - name: Build Tests on Mac/Linux
               if: runner.os != 'Windows'
-              run: cargo build --tests --message-format=json > cargo build --tests | node workflow_helpers/relocate_build_binaries binary_files
+              run: cargo build --tests --message-format=json | node workflow_helpers/relocate_build_binaries binary_files
 
             - name: Archive Tests
               uses: actions/upload-artifact@v3
