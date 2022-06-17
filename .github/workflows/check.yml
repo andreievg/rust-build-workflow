@@ -54,12 +54,13 @@ jobs:
         with:
           name: ${{ env.TEST_BINARIES }}
 
-      - name:  Setup tmate session
-        if: runner.os == 'Windows'
-        uses: mxschmitt/action-tmate@v3
-
-      - name: Execute Test Binaries Linux
-        if: runner.os != 'Windows'
+      - name:  Execute Test Binaries
         run: | 
-          chmod +x *
-          for f in *; do  "./$f" ; done
+          node -e "
+            const { readdirSync } = require('fs'); 
+            const { execSync } = require('child_process');
+            const readDirConf = { encoding: 'utf8' };
+            const execSyncConf = { stdio: 'inherit' };
+            readdirSync('.', readDirConf).map(executable => execSync(executable, execSyncConf));
+          "
+
