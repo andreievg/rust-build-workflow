@@ -6,9 +6,9 @@ on:
       os:
         required: true
         type: string
-        
+
 env: 
-  TEST_BINARIES: ${{ "test_binaries_" + inputs.os }}
+  TEST_BINARIES: ${{ 'test_binaries_' + inputs.os }}
 
 jobs:
   check:
