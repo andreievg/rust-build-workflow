@@ -24,7 +24,7 @@ jobs:
           setx OPENSSL_DIR "C:\Program Files\OpenSSL-Win64\"
           cargo build --tests --message-format=json > test_build_info.txt
 
-   - name: Build Tests on Mac/Linux
+      - name: Build Tests on Mac/Linux
         if: runner.os != 'Windows'
         run: cargo build --tests --message-format=json > test_build_info.txt
 
