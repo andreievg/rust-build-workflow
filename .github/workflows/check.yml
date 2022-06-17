@@ -56,7 +56,7 @@ jobs:
             - name: Make Binaries Executable
               # Permissions are lost during upload/download artifact
               if: runner.os != 'Windows'
-              run: chmod +x *
+              run: chmod +x binary_files/*
 
             - name: Execute Test Binaries
               run: node workflow_helpers/execute_all_in_folder binary_files
