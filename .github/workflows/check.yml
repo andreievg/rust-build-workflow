@@ -33,11 +33,28 @@ jobs:
         if: runner.os != 'Windows'
         run: cargo build --tests --message-format=json > test_build_info.txt
 
-      - name: Compress Tests
+      - name: Extract Binary File List
+        # move test binaries to binaries folder, use cargo output saved to test_build_info.txt to locate binaries
         run: | 
-          grep -o '"executable":"[^"]*' test_build_info.txt | grep -o '[^"]*$' > binary_file_list.txt
-          mkdir binary_files
-          cat binary_file_list.txt | xargs -I '{}' mv '{}' ./binary_files/.
+          node -e "
+            console.log(
+              require('fs')
+                .readFileSync('out.txt', 'utf8')
+                .trim()
+                // --message-format=json output is json seperated by newline
+                .split('\n')
+                .map(JSON.parse)
+                // we want to extra this field, it has full path of binary
+                .map(({ executable }) => executable)
+                // some json output might not have executable key
+                .filter((e) => e)
+                // unique
+                .reduce((a, e) => (a.includes(e) ? a : [...a, e]), [])
+            );
+            // save output to binaries.txt (newlines seperated file locations)
+          " > binaries.txt
+          mkdir binaries
+          cat binaries.txt | xargs -I '{}' mv '{}' ./binaries/.
         shell: bash
       
       - name: Archive Tests
@@ -54,13 +71,16 @@ jobs:
         with:
           name: ${{ env.TEST_BINARIES }}
 
-      - name:  Execute Test Binaries
+      - name: Make Binaries Executable
+        # Permissions are lost during upload/download artifact
+        if: runner.os != 'Windows'
+        run: chmod +x *
+
+      - name: Execute Test Binaries
         run: | 
           node -e "
-            const { readdirSync } = require('fs'); 
-            const { execSync } = require('child_process');
-            const readDirConf = { encoding: 'utf8' };
-            const execSyncConf = { stdio: 'inherit' };
-            readdirSync('.', readDirConf).map(executable => execSync(executable, execSyncConf));
+            require('fs')
+              .readdirSync('.', 'utf8')
+              .map((executable) => require('child_process').execSync(executable, { stdio: 'inherit' }));
           "
 
