@@ -12,8 +12,6 @@ env:
 
 jobs:
   check:
-    env:
-      OPENSSL_DIR: C:\Program Files\OpenSSL-Win64\
     runs-on: ${{ inputs.os }}
     steps:
       - name: Checkout 
@@ -25,6 +23,8 @@ jobs:
 
       - name: Build Tests on Window
         if: runner.os == 'Windows'
+        env:
+          OPENSSL_DIR: C:\Program Files\OpenSSL-Win64\
         run: |
           choco install openssl
           cargo build --tests --message-format=json > test_build_info.txt
