@@ -44,6 +44,9 @@ jobs:
         runs-on: ${{ inputs.os }}
         needs: check
         steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
             - name: Download Test Binaries
               uses: actions/download-artifact@v3
               with:
@@ -55,4 +58,4 @@ jobs:
               run: chmod +x *
 
             - name: Execute Test Binaries
-              run: node ../workflow_helpers/execute_all_in_folder .
+              run: node workflow_helpers/execute_all_in_folder .
