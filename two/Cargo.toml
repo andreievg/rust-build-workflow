@@ -7,4 +7,3 @@ edition = "2021"
 
 [dependencies]
 tokio = {version = "1.17.0", features=["time","rt-multi-thread","macros"]}
-openssl = "0.10.40"
