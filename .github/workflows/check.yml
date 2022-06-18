@@ -34,9 +34,7 @@ jobs:
             - name: Build Tests on Mac/Linux
               if: runner.os != 'Windows'
               run: |
-                  cargo build --tests --message-format=json > build_info.txt
-                  echo build_info.txt | node workflow_helpers/relocate_build_binaries binary_files
-                  echo build_info.txt
+                  cargo build --tests --message-format=json | node workflow_helpers/relocate_build_binaries binary_files
 
             - name: Archive Tests
               uses: actions/upload-artifact@v3
