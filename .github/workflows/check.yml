@@ -58,5 +58,8 @@ jobs:
               if: runner.os != 'Windows'
               run: chmod +x binary_files/*
 
+            - name: Setup tmate session
+              uses: mxschmitt/action-tmate@v3
+
             - name: Execute Test Binaries
               run: node workflow_helpers/execute_all_in_folder binary_files
