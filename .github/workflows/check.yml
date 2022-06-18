@@ -19,7 +19,7 @@ jobs:
 
             - name: Cache
               # Caches dependencies for rust (debug or test), does not cache increments
-              uses: andreievg/rust-cache-cloud@v1
+              uses: andreievg/rust-cache-cloud@558f48ddf318e5b4cf3e577342c55a5a75f60aa0
 
               # Build and relocate test binaries to binary_files folder
             - name: Build Tests on Window
@@ -41,26 +41,26 @@ jobs:
               with:
                   name: ${{ env.TEST_BINARIES }}
                   path: binary_files
-    check2:
-        runs-on: ${{ inputs.os }}
-        needs: check
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v3
+    # check2:
+    #     runs-on: ${{ inputs.os }}
+    #     needs: check
+    #     steps:
+    #         - name: Checkout
+    #           uses: actions/checkout@v3
 
-            - name: Download Test Binaries
-              uses: andreievg/rust-cache-cloud@v1
-              with:
-                  name: ${{ env.TEST_BINARIES }}
-                  path: binary_files
+    #         - name: Download Test Binaries
+    #           uses: andreievg/rust-cache-cloud@v1
+    #           with:
+    #               name: ${{ env.TEST_BINARIES }}
+    #               path: binary_files
 
-            - name: Make Binaries Executable
-              # Permissions are lost during upload/download artifact
-              if: runner.os != 'Windows'
-              run: chmod +x binary_files/*
+    #         - name: Make Binaries Executable
+    #           # Permissions are lost during upload/download artifact
+    #           if: runner.os != 'Windows'
+    #           run: chmod +x binary_files/*
 
-            # - name: Setup tmate session
-            #   uses: mxschmitt/action-tmate@v3
+    #         # - name: Setup tmate session
+    #         #   uses: mxschmitt/action-tmate@v3
 
-            - name: Execute Test Binaries
-              run: node workflow_helpers/execute_all_in_folder binary_files
+    #         - name: Execute Test Binaries
+    #           run: node workflow_helpers/execute_all_in_folder binary_files
