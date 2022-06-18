@@ -19,7 +19,7 @@ jobs:
 
             - name: Cache
               # Caches dependencies for rust (debug or test), does not cache increments
-              uses: andreievg/rust-cache-cloud@558f48ddf318e5b4cf3e577342c55a5a75f60aa0
+              uses: andreievg/rust-cache-cloud@v1
 
               # Build and relocate test binaries to binary_files folder
             - name: Build Tests on Window
