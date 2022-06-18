@@ -39,7 +39,7 @@ const extractFilenames = (input) => {
         .split('\n')
         .map(JSON.parse)
         // just the test binaries
-        .filter(({ profile }) => profile?.test)
+        .filter(({ profile: { test } }) => test)
         // we want to extra this field
         .map(({ executable }) => executable)
         // some json output might not have executable key

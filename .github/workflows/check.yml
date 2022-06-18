@@ -33,7 +33,10 @@ jobs:
               # Build and relocate test binaries to binary_files folder
             - name: Build Tests on Mac/Linux
               if: runner.os != 'Windows'
-              run: cargo build --tests --message-format=json | node workflow_helpers/relocate_build_binaries binary_files
+              run: |
+                  cargo build --tests --message-format=json > build_info.txt
+                  echo build_info.txt | node workflow_helpers/relocate_build_binaries binary_files
+                  echo build_info.txt
 
             - name: Archive Tests
               uses: actions/upload-artifact@v3
@@ -58,8 +61,8 @@ jobs:
               if: runner.os != 'Windows'
               run: chmod +x binary_files/*
 
-            - name: Setup tmate session
-              uses: mxschmitt/action-tmate@v3
+            # - name: Setup tmate session
+            #   uses: mxschmitt/action-tmate@v3
 
             - name: Execute Test Binaries
               run: node workflow_helpers/execute_all_in_folder binary_files
