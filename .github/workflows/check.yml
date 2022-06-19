@@ -21,20 +21,20 @@ jobs:
               # Caches dependencies for rust (debug or test), does not cache increments
               uses: andreievg/rust-cache-cloud@v1
 
-              # Build and relocate test binaries to binary_files folder
-            - name: Build Tests on Window
-              if: runner.os == 'Windows'
-              env:
-                  OPENSSL_DIR: C:\Program Files\OpenSSL-Win64\
-              run: |
-                  choco install openssl
-                  cargo build --tests --message-format=json | node workflow_helpers/relocate_build_binaries binary_files
+            #   # Build and relocate test binaries to binary_files folder
+            # - name: Build Tests on Window
+            #   if: runner.os == 'Windows'
+            #   env:
+            #       OPENSSL_DIR: C:\Program Files\OpenSSL-Win64\
+            #   run: |
+            #       choco install openssl
+            #       cargo build --tests --message-format=json | node workflow_helpers/relocate_build_binaries binary_files
 
-              # Build and relocate test binaries to binary_files folder
-            - name: Build Tests on Mac/Linux
-              if: runner.os != 'Windows'
-              run: |
-                  cargo build --tests --message-format=json | node workflow_helpers/relocate_build_binaries binary_files
+            #   # Build and relocate test binaries to binary_files folder
+            # - name: Build Tests on Mac/Linux
+            #   if: runner.os != 'Windows'
+            #   run: |
+            #       cargo build --tests --message-format=json | node workflow_helpers/relocate_build_binaries binary_files
 
             - name: Archive Tests
               uses: actions/upload-artifact@v3
