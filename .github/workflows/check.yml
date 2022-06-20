@@ -8,10 +8,6 @@ on:
     #             required: true
     #             type: string
 
-env:
-    # TEST_BINARIES: ${{ format('test_binaries_{0}', inputs.os) }}
-    CHECK: ${{ secrets.CHECK }}
-
 jobs:
     check:
         runs-on: ubuntu-latest
@@ -20,7 +16,7 @@ jobs:
               # Caches dependencies for rust (debug or test), does not cache increments
               uses: andreievg/rust-cache-cloud@v1
               with: 
-                google_drive_keys: ${{ env.CHECK }}
+                google_drive_keys: ${{ secrets.GDRIVE }}
                 google_drive_folder_id: 1m3jO_1J_dWFqdi3ZmBAEsR3NiyfbnWD_
 
 
