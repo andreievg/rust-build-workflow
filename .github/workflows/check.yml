@@ -20,8 +20,7 @@ jobs:
               # Caches dependencies for rust (debug or test), does not cache increments
               uses: andreievg/rust-cache-cloud@v1
               with: 
-              # ${{ secrets.GDRIVE }}
-                google_drive_keys: 'ABC'
+                google_drive_keys: ${{ secrets.GDRIVE }}
                 google_drive_folder_id: '1m3jO_1J_dWFqdi3ZmBAEsR3NiyfbnWD_'
 
 
