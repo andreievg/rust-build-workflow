@@ -9,7 +9,7 @@ on:
 
 env:
     TEST_BINARIES: ${{ format('test_binaries_{0}', inputs.os) }}
-    CHECK: ${{ secrets.CHEK }}
+    CHECK: ${{ secrets.CHECK }}
 
 jobs:
     check:
