@@ -2,19 +2,19 @@ name: check
 
 on:
     workflow_dispatch:
-    workflow_call:
-        inputs:
-            os:
-                required: true
-                type: string
+    # workflow_call:
+    #     inputs:
+    #         os:
+    #             required: true
+    #             type: string
 
 env:
-    TEST_BINARIES: ${{ format('test_binaries_{0}', inputs.os) }}
+    # TEST_BINARIES: ${{ format('test_binaries_{0}', inputs.os) }}
     CHECK: ${{ secrets.CHECK }}
 
 jobs:
     check:
-        runs-on: ${{ inputs.os }}
+        runs-on: ubuntu-latest
         steps:
             - name: Cache
               # Caches dependencies for rust (debug or test), does not cache increments
