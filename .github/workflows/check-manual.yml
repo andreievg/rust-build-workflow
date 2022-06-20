@@ -25,13 +25,14 @@ jobs:
     uses: ./.github/workflows/check.yml
     with:
       os: ubuntu-latest
-  windows:
-    if: ${{ inputs.on-windows }}
-    uses: ./.github/workflows/check.yml
-    with:
-      os: windows-latest
-  mac:
-    if: ${{ inputs.on-mac }}
-    uses: ./.github/workflows/check.yml
-    with:
-      os: macos-latest
+      check: ${{ secrets.GDRIVE }}
+  # windows:
+  #   if: ${{ inputs.on-windows }}
+  #   uses: ./.github/workflows/check.yml
+  #   with:
+  #     os: windows-latest
+  # mac:
+  #   if: ${{ inputs.on-mac }}
+  #   uses: ./.github/workflows/check.yml
+  #   with:
+  #     os: macos-latest
