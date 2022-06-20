@@ -6,12 +6,12 @@ on:
     inputs:
       on-windows:
         description: 'Windows'
-        default: true
+        default: false
         required: true
         type: boolean
       on-mac:
         description: 'Mac'
-        default: true
+        default: false
         required: true
         type: boolean
       on-linux:
