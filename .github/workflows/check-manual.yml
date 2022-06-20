@@ -19,13 +19,17 @@ on:
         default: true
         required: true
         type: boolean
+
+env: 
+  check: ${{ secrets.GDRIVE }}
+
 jobs:
   linux:
     if: ${{ inputs.on-linux }}
     uses: ./.github/workflows/check.yml
     with:
       os: ubuntu-latest
-      check: ${{ secrets.GDRIVE }}
+      check: ${{ env.check }}
   # windows:
   #   if: ${{ inputs.on-windows }}
   #   uses: ./.github/workflows/check.yml
