@@ -19,24 +19,19 @@ on:
         default: true
         required: true
         type: boolean
-
-env: 
-  check: ${{ secrets.CHECK }}
-
 jobs:
   linux:
     if: ${{ inputs.on-linux }}
     uses: ./.github/workflows/check.yml
     with:
       os: ubuntu-latest
-      check: ${{ env.check }}
-  # windows:
-  #   if: ${{ inputs.on-windows }}
-  #   uses: ./.github/workflows/check.yml
-  #   with:
-  #     os: windows-latest
-  # mac:
-  #   if: ${{ inputs.on-mac }}
-  #   uses: ./.github/workflows/check.yml
-  #   with:
-  #     os: macos-latest
+  windows:
+    if: ${{ inputs.on-windows }}
+    uses: ./.github/workflows/check.yml
+    with:
+      os: windows-latest
+  mac:
+    if: ${{ inputs.on-mac }}
+    uses: ./.github/workflows/check.yml
+    with:
+      os: macos-latest

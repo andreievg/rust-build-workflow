@@ -6,24 +6,20 @@ on:
             os:
                 required: true
                 type: string
-            check:
-                required: false
-                type: string
 
 env:
     TEST_BINARIES: ${{ format('test_binaries_{0}', inputs.os) }}
+    CHECK: ${{ secrets.CHEK }}
 
 jobs:
     check:
         runs-on: ${{ inputs.os }}
-        env: 
-          CHECK: check_exists
         steps:
             - name: Cache
               # Caches dependencies for rust (debug or test), does not cache increments
               uses: andreievg/rust-cache-cloud@v1
               with: 
-                google_drive_keys: ${{ inputs.check }}
+                google_drive_keys: ${{ env.CHECK }}
                 google_drive_folder_id: 1m3jO_1J_dWFqdi3ZmBAEsR3NiyfbnWD_
 
 
