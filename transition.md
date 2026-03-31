@@ -237,3 +237,4 @@ COGS doesn’t traditionally sync this anywhere. It could make a simple trigger 
 We may need some coordination, that when a OMS3.0 site syncs, COMS messages COGS to disable editing of the site on COGS. Or COMS can just reject further updates if someone does edit it on COGS. Or maybe updates sync both ways\! Perhaps for dashboard purposes.
 
  
+ placeholder
